@@ -2,7 +2,7 @@
 
 // The shortcode function
 function kaizen_form_shortcode() {
-     ob_start();
+    ob_start();
     include plugin_dir_path(__FILE__) . 'templates/form.php';
     $string = ob_get_clean();
     return $string;

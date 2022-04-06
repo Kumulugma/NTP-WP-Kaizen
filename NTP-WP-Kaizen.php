@@ -23,6 +23,8 @@ function k3e_plugin_init() {
         } else {
             require_once 'shortcodes/form.php';
             require_once 'shortcodes/list.php';
+            wp_enqueue_script( 'owl-carousel', plugin_dir_url(__FILE__) . "node_modules/owl.carousel2/dist/owl.carousel.min.js", ['jquery'] );
+    
         }
     }
 }
