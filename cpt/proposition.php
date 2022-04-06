@@ -76,7 +76,7 @@ function proposition() {
         'label' => __('Propozycja', 'kaizen'),
         'description' => __('Post Type Description', 'kaizen'),
         'labels' => $labels,
-        'supports' => array('title', 'editor', 'comments', 'revisions'),
+        'supports' => array('title', 'comments', 'revisions'),
         'taxonomies' => array('etykiety'),
         'hierarchical' => false,
         'public' => true,
