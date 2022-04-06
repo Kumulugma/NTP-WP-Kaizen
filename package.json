@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "owl.carousel2": "^2.2.2"
+    "owl.carousel2": "^2.2.2",
+    "select2": "^4.1.0-rc.0"
   }
 }
