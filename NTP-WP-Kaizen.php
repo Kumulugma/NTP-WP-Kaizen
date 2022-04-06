@@ -13,6 +13,7 @@
 require_once 'NTP-Kaizen.php';
 require_once 'ui/admin.php';
 require_once 'cpt/department.php';
+require_once 'cpt/proposition.php';
 add_action('init', 'k3e_plugin_init');
 
 function k3e_plugin_init() {

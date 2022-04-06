@@ -15,7 +15,7 @@ class Kaizen {
                     'kaizen',
                     'kaizen_content',
                     'dashicons-email-alt2',
-                    3
+                    101
             );
 
             /* Dostępne pozycje
