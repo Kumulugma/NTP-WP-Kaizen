@@ -25,6 +25,12 @@ function k3e_plugin_init() {
             require_once 'shortcodes/list.php';
         
         }
+    } else {
+        if (!is_admin()) {
+            require_once 'shortcodes/form.php';
+            require_once 'shortcodes/list.php';
+        
+        }
     }
 }
 
