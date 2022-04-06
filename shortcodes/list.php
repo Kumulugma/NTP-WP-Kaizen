@@ -2,7 +2,11 @@
 
 // The shortcode function
 function kaizen_list_shortcode() {
-    return file_get_contents(plugin_dir_path(__FILE__) . 'templates/form.php');
+
+    ob_start();
+    include plugin_dir_path(__FILE__) . 'templates/list.php';
+    $string = ob_get_clean();
+    return $string;
 }
 
 // Register shortcode
