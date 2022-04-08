@@ -10,7 +10,6 @@
   Domain Path:
   Version: 0.0.1a
  */
-require_once 'ui/admin.php';
 require_once 'cpt/proces.php';
 require_once 'cpt/proposition.php';
 add_action('init', 'k3e_plugin_init');
@@ -19,17 +18,20 @@ function k3e_plugin_init() {
     do_action('k3e_plugin_init');
     if (current_user_can('manage_options')) {
         if (is_admin()) {
+            require_once 'ui/admin.php';
             Kaizen::run();
         } else {
+            require_once 'ui/front.php';
+            Kaizen::run();
             require_once 'shortcodes/form.php';
             require_once 'shortcodes/list.php';
-        
         }
     } else {
         if (!is_admin()) {
+            require_once 'ui/front.php';
+            Kaizen::run();
             require_once 'shortcodes/form.php';
             require_once 'shortcodes/list.php';
-        
         }
     }
 }

@@ -2,7 +2,6 @@
 
 class Kaizen {
 
-    
     public static function run() {
 
         add_action('admin_menu', 'kaizen_menu');
@@ -40,11 +39,26 @@ class Kaizen {
             include plugin_dir_path(__FILE__) . 'templates/index.php';
         }
 
+        Kaizen::save();
     }
 
     public static function save() {
-        if (isset($_POST['Form'])) {
-            
+        if (isset($_POST['Kaizen'])) {
+            if (isset($_POST['Kaizen']['form'])) {
+                if ($_POST['Kaizen']['form'] == '--') {
+                    $form_page = 0;
+                } else {
+                    $form_page = intval($_POST['Kaizen']['form']);
+                }
+
+
+                if (FALSE === get_option('kaizen_form_page')) {
+                    add_option('kaizen_form_page', $form_page, '', 0);
+                } else {
+                    update_option('kaizen_form_page', $form_page, '', 0);
+                }
+            }
+            wp_redirect('admin.php?page=' . $_GET['page']);
         }
     }
 

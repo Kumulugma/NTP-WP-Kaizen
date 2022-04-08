@@ -166,7 +166,6 @@ function kaizen_append_post_status_list() {
             }
         </style>
         <?php
-
         if ($post->post_status == 'nowy') {
             $label_1 = "<span id='post-status-display'> Nowy</span>";
         } else {
@@ -220,4 +219,42 @@ function kaizen_status_into_inline_edit() { // ultra-simple example
 	</script>";
 }
 
+function add_custom_meta_box() {
+    add_meta_box("before-meta-box", "Stan przed", "before_meta_box_markup", "propozycja", "normal", "high", null);
+    add_meta_box("after-meta-box", "Stan po", "after_meta_box_markup", "propozycja", "normal", "high", null);
+    add_meta_box("process-meta-box", "Przypisane do", "process_meta_box_markup", "propozycja", "side", "high", null);
+}
 
+add_action("add_meta_boxes", "add_custom_meta_box");
+
+function before_meta_box_markup($object) {
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+    ?>
+    <div>
+        <p><?= get_post_meta($object->ID, "kaizen_before", true); ?></p>
+    </div>
+    <?php
+}
+
+function after_meta_box_markup($object) {
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+    ?>
+    <div>
+        <p><?= get_post_meta($object->ID, "kaizen_after", true); ?></p>
+    </div>
+    <?php
+}
+
+function process_meta_box_markup($object) {
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+    ?>
+    <div>
+        <?php $process = get_post_meta($object->ID, "kaizen_process", true); ?>
+        <?php if($process) { ?>
+        <p><a href="/wp-admin/post.php?post=<?= $process?>&action=edit"><?= get_the_title($process);?></a> </p>
+        <?php } else { ?>
+        <p><?=__('Brak przypisanego procesu', 'kaizen')?></p>
+        <?php } ?>
+    </div>
+    <?php
+}

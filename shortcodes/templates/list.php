@@ -15,7 +15,11 @@ if (is_user_logged_in()) {
         echo '<div class="item">';
         echo '<h4>' . get_the_title() . '</h4>';
         echo '<p>' . get_the_content() . '</p>';
-        echo '<a href="' . get_option('kaizen_form_page') . '" class="btn btn-primary">' . __('Dodaj propozycję.', 'kaizen') . '</a>';
+        if (get_option('kaizen_form_page') == null || get_option('kaizen_form_page') == 0) {
+            echo '<b>Przypisz stronę z formularzem!</b>';
+        } else {
+            echo '<a href="' . get_permalink(get_option('kaizen_form_page')) . '" class="btn btn-primary">' . __('Dodaj propozycję.', 'kaizen') . '</a>';
+        }
         echo '</div>';
     endwhile;
     echo '</div>';
