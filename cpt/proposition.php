@@ -190,6 +190,16 @@ function kaizen_append_post_status_list() {
                $(".misc-pub-section #post-status-display").append("' . $label_2 . '");
                $("select#post_status").append("<option value=' . "'" . 'odrzucony' . "'" . ' ' . (($post->post_status == 'odrzucony') ? " selected='selected'" : '') . '>Odrzucony</option>");
                $(".misc-pub-section #post-status-display").append("' . $label_3 . '");
+               
+               console.log($("#publish"));
+               $("#publish").attr("name", "save");
+               $("#publish").val("Aktualizuj");
+               console.log($("#publish"));
+               
+               $(".save-post-status").on( "click", function( event ) {
+               $("#publish").attr("name", "save");
+               $("#publish").val("Aktualizuj");
+               });
           });
           </script>
           ';
@@ -219,13 +229,13 @@ function kaizen_status_into_inline_edit() { // ultra-simple example
 	</script>";
 }
 
-function add_custom_meta_box() {
+function add_proposition_meta_box() {
     add_meta_box("before-meta-box", "Stan przed", "before_meta_box_markup", "propozycja", "normal", "high", null);
     add_meta_box("after-meta-box", "Stan po", "after_meta_box_markup", "propozycja", "normal", "high", null);
     add_meta_box("process-meta-box", "Przypisane do", "process_meta_box_markup", "propozycja", "side", "high", null);
 }
 
-add_action("add_meta_boxes", "add_custom_meta_box");
+add_action("add_meta_boxes", "add_proposition_meta_box");
 
 function before_meta_box_markup($object) {
     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
@@ -250,11 +260,68 @@ function process_meta_box_markup($object) {
     ?>
     <div>
         <?php $process = get_post_meta($object->ID, "kaizen_process", true); ?>
-        <?php if($process) { ?>
-        <p><a href="/wp-admin/post.php?post=<?= $process?>&action=edit"><?= get_the_title($process);?></a> </p>
+        <?php if ($process) { ?>
+            <p><a href="/wp-admin/post.php?post=<?= $process ?>&action=edit"><?= get_the_title($process); ?></a> </p>
         <?php } else { ?>
-        <p><?=__('Brak przypisanego procesu', 'kaizen')?></p>
+            <p><?= __('Brak przypisanego procesu', 'kaizen') ?></p>
         <?php } ?>
     </div>
     <?php
+}
+
+function proposition_status_column($column, $post_id) {
+    switch ($column) {
+
+        case 'status' :
+            switch (get_post_status($post_id)) {
+                case 'nowy' :
+                    echo '<span style="color:#3b6aad">';
+                    echo "Nowy";
+                    echo '</span>';
+                    break;
+                case 'zaakceptowany' :
+                    echo '<span style="color:#286922">';
+                    echo "Zaakceptowany";
+                    echo '</span>';
+                    break;
+                case 'odrzucony' :
+                    echo '<span style="color:#c64141">';
+                    echo "Odrzucony";
+                    echo '</span>';
+                    break;
+            }
+            break;
+    }
+}
+
+function set_proposition_status_columns($columns) {
+    $columns['status'] = __('Status', 'kaizen');
+
+    return $columns;
+}
+
+if (function_exists('add_theme_support')) {
+    if (isset($_GET['post_type'])) {
+        $post_type = $_GET['post_type'];
+
+        if (in_array($post_type, array('propozycja'))) {
+            add_filter('manage_posts_columns', 'set_proposition_status_columns');
+            add_action('manage_posts_custom_column', 'proposition_status_column', 10, 2);
+            add_filter('manage_posts_columns', 'proposition_column_order');
+        }
+    }
+}
+
+function proposition_column_order($columns) {
+    $n_columns = array();
+    $move = 'status'; // what to move
+    $before = 'taxonomy-etykiety'; // move before this
+    foreach ($columns as $key => $value) {
+        if ($key == $before) {
+            $n_columns[$move] = $move;
+        }
+        $n_columns[$key] = $value;
+    }
+
+    return $n_columns;
 }
