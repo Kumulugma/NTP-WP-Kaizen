@@ -112,7 +112,6 @@ function rejected_proposition_meta_box_markup($object) {
         <?php
         $args = array(
             'post_type' => 'propozycja',
-            'post_status' => 'publish',
             'post_status' => 'odrzucony',
             'order' => 'ASC',
         );
@@ -141,7 +140,6 @@ function accepted_proposition_meta_box_markup($object) {
         <?php
         $args = array(
             'post_type' => 'propozycja',
-            'post_status' => 'publish',
             'post_status' => 'zaakceptowany',
             'order' => 'ASC',
         );
@@ -170,7 +168,6 @@ function new_proposition_meta_box_markup($object) {
         <?php
         $args = array(
             'post_type' => 'propozycja',
-            'post_status' => 'publish',
             'post_status' => 'nowy',
             'order' => 'ASC',
         );
@@ -198,11 +195,15 @@ function steps_meta_box_markup($object) {
     wp_enqueue_script('dataTable-config', plugin_dir_url(__FILE__) . "../assets/dataTable.js");
 
     $steps = get_post_meta($_GET['post'], 'process_steps', true);
-    $steps = unserialize($steps);
+    if ($steps) {
+        $steps = unserialize($steps);
+    } else {
+        $steps = [];
+    }
     ?>
     <div>
         <form method="post">
-            <table id="process-steps" class="display" style="width:100%" data-counter="<?=count($steps)?>">
+            <table id="process-steps" class="display" style="width:100%" data-counter="<?= count($steps) ?>">
                 <thead>
                     <tr>
                         <th>Krok</th>
@@ -210,11 +211,11 @@ function steps_meta_box_markup($object) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($steps as $k => $step) { ?>
-                    <tr>
-                        <td><?=$k+1?></td>
-                        <td><input name="step[]" class="" type="text" size="140" value="<?=$step?>" /></td>
-                    </tr>
+                    <?php foreach ($steps as $k => $step) { ?>
+                        <tr>
+                            <td><?= $k + 1 ?></td>
+                            <td><input name="step[]" class="" type="text" size="140" value="<?= $step ?>" /></td>
+                        </tr>
                     <?php } ?>
                 </tbody>
                 <tfoot>

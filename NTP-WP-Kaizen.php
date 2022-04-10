@@ -19,6 +19,8 @@ function kaizen_plugin_init() {
     if (current_user_can('manage_options')) {
         if (is_admin()) {
             require_once 'ui/admin.php';
+            require_once 'widgets/KaizenWidget.php';
+            KaizenWidget::run();
             Kaizen::run();
         } else {
             require_once 'ui/front.php';

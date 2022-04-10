@@ -273,23 +273,7 @@ function proposition_status_column($column, $post_id) {
     switch ($column) {
 
         case 'status' :
-            switch (get_post_status($post_id)) {
-                case 'nowy' :
-                    echo '<span style="color:#3b6aad">';
-                    echo "Nowy";
-                    echo '</span>';
-                    break;
-                case 'zaakceptowany' :
-                    echo '<span style="color:#286922">';
-                    echo "Zaakceptowany";
-                    echo '</span>';
-                    break;
-                case 'odrzucony' :
-                    echo '<span style="color:#c64141">';
-                    echo "Odrzucony";
-                    echo '</span>';
-                    break;
-            }
+            status_color(get_post_status($post_id));
             break;
     }
 }
@@ -324,4 +308,24 @@ function proposition_column_order($columns) {
     }
 
     return $n_columns;
+}
+
+function status_color($status) {
+    switch ($status) {
+        case 'nowy' :
+            echo '<span style="color:#3b6aad">';
+            echo "Nowy";
+            echo '</span>';
+            break;
+        case 'zaakceptowany' :
+            echo '<span style="color:#286922">';
+            echo "Zaakceptowany";
+            echo '</span>';
+            break;
+        case 'odrzucony' :
+            echo '<span style="color:#c64141">';
+            echo "Odrzucony";
+            echo '</span>';
+            break;
+    }
 }
