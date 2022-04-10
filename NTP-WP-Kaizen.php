@@ -27,6 +27,7 @@ function kaizen_plugin_init() {
             Kaizen::run();
             require_once 'shortcodes/form.php';
             require_once 'shortcodes/list.php';
+            require_once 'shortcodes/user.php';
         }
     } else {
         if (!is_admin()) {
@@ -34,6 +35,7 @@ function kaizen_plugin_init() {
             Kaizen::run();
             require_once 'shortcodes/form.php';
             require_once 'shortcodes/list.php';
+            require_once 'shortcodes/user.php';
         }
     }
 }

@@ -329,3 +329,27 @@ function status_color($status) {
             break;
     }
 }
+
+
+function proposition_labels($status) {
+    switch ($status) {
+        case 'nowy' :
+            echo "<b>".__("Status: ")."</b>";
+            echo '<span style="color:#3b6aad">';
+            echo "Nowy";
+            echo '</span>';
+            break;
+        case 'zaakceptowany' :
+            echo "<b>".__("Status: ")."</b>";
+            echo '<span style="color:#286922">';
+            echo "Zaakceptowany";
+            echo '</span>';
+            break;
+        case 'odrzucony' :
+            echo "<b>".__("Status: ")."</b>";
+            echo '<span style="color:#c64141">';
+            echo "Odrzucony";
+            echo '</span>';
+            break;
+    }
+}
