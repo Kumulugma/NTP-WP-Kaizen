@@ -60,6 +60,11 @@ class Kaizen {
             }
             wp_redirect('admin.php?page=' . $_GET['page']);
         }
+
+
+        if (isset($_POST['step'])) {
+            update_post_meta($_POST['process_ID'], 'process_steps', serialize($_POST['step']));
+        }
     }
 
 }

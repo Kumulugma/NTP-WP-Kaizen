@@ -193,9 +193,42 @@ function new_proposition_meta_box_markup($object) {
 }
 
 function steps_meta_box_markup($object) {
+    wp_enqueue_script('dataTable', plugin_dir_url(__FILE__) . "../node_modules/datatables.net/js/jquery.dataTables.min.js", ['jquery']);
+    wp_enqueue_style('dataTable-css', "https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css");
+    wp_enqueue_script('dataTable-config', plugin_dir_url(__FILE__) . "../assets/dataTable.js");
+
+    $steps = get_post_meta($_GET['post'], 'process_steps', true);
+    $steps = unserialize($steps);
     ?>
     <div>
-        Kroki procesu
+        <form method="post">
+            <table id="process-steps" class="display" style="width:100%" data-counter="<?=count($steps)?>">
+                <thead>
+                    <tr>
+                        <th>Krok</th>
+                        <th>Opis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($steps as $k => $step) { ?>
+                    <tr>
+                        <td><?=$k+1?></td>
+                        <td><input name="step[]" class="" type="text" size="140" value="<?=$step?>" /></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Krok</th>
+                        <th>Opis</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <input name="process_ID" type="hidden" value="<?= $_GET['post'] ?>" />
+            <button id="addRow" class="button">Dodaj nowy krok</button>
+            <button id="proces-step-remove" class="button">Usuń zaznaczony krok</button>
+            <button id="proces-step-save" class="button button-primary " style="float:right; margin-top: 5px;">Zapisz zmiany</button>
+        </form>
     </div>
     <?php
 }
