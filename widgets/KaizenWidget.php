@@ -35,7 +35,7 @@ class KaizenWidget {
                         while ($loop->have_posts()) : $loop->the_post();
                             echo "<tr>";
                             echo '<td>';
-                            echo '<a href=/wp-admin/post.php?action=edit&post=' . get_the_ID() . ' style="text-decoration: none;"> ' . get_the_title() . '</a>';
+                            echo '<a href="/wp-admin/post.php?action=edit&post=' . get_the_ID() . '" style="text-decoration: none;"> ' . get_the_title() . '</a>';
                             echo '</td>';
                             echo '<td>';
                             echo get_comments_number(get_the_ID());
@@ -82,7 +82,7 @@ class KaizenWidget {
                         while ($loop->have_posts()) : $loop->the_post();
                             echo "<tr>";
                             echo '<td>';
-                            echo '<a href=/wp-admin/post.php?action=edit&post=' . get_the_ID() . ' style="text-decoration: none;"> ' . get_the_title() . '</a>';
+                            echo '<a href="/wp-admin/post.php?action=edit&post=' . get_the_ID() . '" style="text-decoration: none;"> ' . get_the_title() . '</a>';
                             echo '</td>';
                             echo '<td>';
                             echo status_color(get_post_status());
@@ -140,7 +140,7 @@ class KaizenWidget {
 
                             echo "<tr>";
                             echo '<td>';
-                            echo '<a href=/wp-admin/edit.php?post_type=proces&dzial=' . $term->slug . ' style="text-decoration: none;"> ' . $term->name . '</a>';
+                            echo '<a href="/wp-admin/edit.php?post_type=proces&dzial=' . $term->slug . '" style="text-decoration: none;"> ' . $term->name . '</a>';
                             echo '</td>';
                             echo '<td>';
                             echo $count->post_count;
